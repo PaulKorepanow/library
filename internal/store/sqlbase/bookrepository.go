@@ -24,9 +24,9 @@ func (r *bookRepository) FindBookByTitle(title string) (*model.Book, error) {
 	return book, nil
 }
 
-func (r *bookRepository) DeleteBookByID(id uint) error {
+func (r *bookRepository) DeleteBookByTitle(title string) error {
 	book := new(model.Book)
-	if err := r.db.Where("id = ?", id).Delete(book).Error; err != nil {
+	if err := r.db.Where("title = ?", title).Delete(book).Error; err != nil {
 		return err
 	}
 	return nil

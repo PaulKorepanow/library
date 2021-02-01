@@ -1,6 +1,9 @@
 package sqlbase
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	"main/internal/store"
+)
 
 type SqlStore struct {
 	db             *gorm.DB
@@ -13,7 +16,7 @@ func NewSqlStore(db *gorm.DB) *SqlStore {
 	}
 }
 
-func (s *SqlStore) Book() *bookRepository {
+func (s *SqlStore) BookRepository() store.BookRepository {
 	if s.bookRepository == nil {
 		s.bookRepository = &bookRepository{db: s.db}
 	}

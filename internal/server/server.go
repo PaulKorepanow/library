@@ -7,7 +7,8 @@ import (
 	_ "gorm.io/driver/postgres"
 	"log"
 	"main/internal/model"
-	"main/internal/storage/sqlbase"
+	"main/internal/store"
+	"main/internal/store/sqlbase"
 	"net/http"
 	"os"
 	"path"
@@ -34,7 +35,7 @@ func LoadConfig(configPath string) (*Config, error) {
 type Server struct {
 	config *Config
 	logger *log.Logger
-	db     *sqlbase.SqlStore
+	db     store.Store
 }
 
 func NewServer(config *Config, db *sqlbase.SqlStore) Server {
@@ -47,7 +48,7 @@ func NewServer(config *Config, db *sqlbase.SqlStore) Server {
 }
 
 func (s *Server) Start() {
-	s.logger.Println("starting server")
+	s.logger.Println("Starting server ...")
 	http.ListenAndServe(s.config.BindAddr, s.configureRouter())
 }
 
